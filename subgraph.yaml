@@ -1,0 +1,32 @@
+specVersion: 0.0.1
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: GodModeErc20
+    network: goerli
+    source:
+      address: "0x97cb342Cf2F6EcF48c1285Fb8668f5a4237BF862"
+      abi: GodModeErc20
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - Burn
+        - Mint
+        - Transfer
+      abis:
+        - name: GodModeErc20
+          file: ./abis/GodModeErc20.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: handleApproval
+        - event: Burn(indexed address,uint256)
+          handler: handleBurn
+        - event: Mint(indexed address,uint256)
+          handler: handleMint
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/god-mode-erc-20.ts
